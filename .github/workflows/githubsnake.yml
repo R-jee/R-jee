@@ -1,0 +1,41 @@
+name: Generate Rjee GitHub Snake
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # every day at midnight
+  workflow_dispatch:     # to allow manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  generate-github-snake:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4.2.2
+
+      - name: Create assets folder
+        run: mkdir -p assets
+
+      - name: Generate GitHub Snake
+        uses: Platane/snk@v3.2.0
+        with:
+          github_user_name: R-jee
+          outputs: |
+            assets/rjee-github-snake.svg
+            assets/rjee-github-snake-dark.svg?palette=github-dark
+            assets/rjee-ocean.gif?color_snake=orange&color_dots=#bfd6f6,#8dbdff,#64a1f4,#4b91f1,#3c7dd9
+
+      - name: Configure Git
+        run: |
+          git config user.name "R-jee"
+          git config user.email "rjee4631@gmail.com"
+
+      - name: Commit and push files
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git add assets/*
+          git diff --cached --quiet || git commit -m "Update GitHub Snake images"
+          git push origin main
