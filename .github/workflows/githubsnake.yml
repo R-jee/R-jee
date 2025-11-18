@@ -34,7 +34,7 @@ jobs:
 
       - name: Commit and push files
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
         run: |
           git add assets/*
           git diff --cached --quiet || git commit -m "Update GitHub Snake images"
