@@ -2,7 +2,7 @@ name: Generate Rjee GitHub Snake
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # every day at midnight
+    - cron: '0 0 1 * *'  # runs at midnight on the 1st of every month
   workflow_dispatch:     # to allow manual trigger
 
 permissions:
